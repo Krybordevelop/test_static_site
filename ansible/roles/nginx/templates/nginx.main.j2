@@ -11,6 +11,15 @@ server {
                 try_files $uri $uri/ =404;
         }
 
+        location /nginx_status {
+                stub_status;
+        }
+
+        location /report {
+                alias /var/log/nginx/;
+                index report.html;
+        }
+
         #location ~ /\.ht {
         #       deny all;
         #}

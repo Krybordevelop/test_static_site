@@ -4,3 +4,25 @@
     name: nginx
     state: latest
   tags: nginx
+
+- name: Copy global config (default)
+  template:
+    src: 'nginx.default.j2'
+    dest: '/etc/nginx/nginx.conf'
+  tags: nginx
+
+- name: Copy main config  
+  template:
+    src: 'nginx.main.j2'
+    dest: '/etc/nginx/sites-enabled/default'
+  tags: nginx
+
+- name: Sync src
+  synchronize:
+    src: ../src/
+    dest: /var/www/html
+
+- name: Reload Nginx
+  service:
+    name: nginx
+    state: reloaded
